@@ -316,4 +316,84 @@ public class AnimationsTest {
             this.moveEclipse.toSVGTag(10));
   }
 
+  // test for svg tag with looping
+  @Test
+  public void testToSVGTagWithLoop() {
+    // test for changing color
+    assertEquals("<animate attributeType=\"xml\" begin=\"base.begin+500.0ms\" "
+                    + "dur=\"500.0ms\" attributeName=\"fill\" from=\"rgb(0,0,0)\" "
+                    + "to=\"rgb(255,0,0)\" "
+                    + "fill=\"freeze\" />\n"
+                    + "<animate attributeType=\"xml\" begin=\"base.end\" "
+                    + "dur=\"1ms\" attributeName=\"fill\" from=\"rgb(255,0,0)\" "
+                    + "to=\"rgb(0,0,0)\" "
+                    + "fill=\"freeze\" />\n",
+            this.changeEclipseColor.toSVGTagWithLoop(10));
+    assertEquals("<animate attributeType=\"xml\" begin=\"base.begin+500.0ms\" "
+                    + "dur=\"500.0ms\" "
+                    + "attributeName=\"fill\" from=\"rgb(0,0,0)\" "
+                    + "to=\"rgb(255,175,175)\" fill=\"freeze\" />\n"
+                    + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
+                    + "attributeName=\"fill\" from=\"rgb(255,175,175)\" "
+                    + "to=\"rgb(0,0,0)\" fill=\"freeze\" />\n",
+            this.changeRectColor.toSVGTagWithLoop(10));
+
+    // test for changing dimension
+    assertEquals("<animate attributeType=\"xml\" type=\"scale\" "
+                    + "begin=\"base.begin+1100.0ms\" "
+                    + "dur=\"100.0ms\" attributeName=\"rx\" from=\"20.0\" to=\"15.5\" "
+                    + "fill=\"freeze\" /> \n"
+                    + "<animate attributeType=\"xml\" type=\"scale\" begin=\"base.begin+1100.0ms\" "
+                    + "dur=\"100.0ms\" "
+                    + "attributeName=\"ry\" from=\"25.5\" to=\"15.5\" fill=\"freeze\" />\n"
+
+            + "<animate attributeType=\"xml\" type=\"scale\" "
+                    + "begin=\"base.end\" "
+                    + "dur=\"1ms\" attributeName=\"rx\" from=\"15.5\" to=\"20.0\" "
+                    + "fill=\"freeze\" /> \n"
+                    + "<animate attributeType=\"xml\" type=\"scale\" begin=\"base.end\" "
+                    + "dur=\"1ms\" "
+                    + "attributeName=\"ry\" from=\"15.5\" to=\"25.5\" fill=\"freeze\" />\n",
+            this.changeEclipseDimension.toSVGTagWithLoop(10));
+    assertEquals("<animate attributeType=\"xml\" type=\"scale\" "
+                    + "begin=\"base.begin+1100.0ms\" "
+                    + "dur=\"100.0ms\" attributeName=\"width\" from=\"20.0\" to=\"15.5\" "
+                    + "fill=\"freeze\" /> \n"
+                    + "<animate attributeType=\"xml\" type=\"scale\" begin=\"base.begin+1100.0ms\" "
+                    + "dur=\"100.0ms\""
+                    + " attributeName=\"height\" from=\"25.5\" to=\"15.5\" fill=\"freeze\" />\n"
+
+                    + "<animate attributeType=\"xml\" type=\"scale\" begin=\"base.end\" "
+                    + "dur=\"1ms\" attributeName=\"width\" from=\"15.5\" to=\"20.0\" "
+                    + "fill=\"freeze\" /> \n"
+                    + "<animate attributeType=\"xml\" type=\"scale\" begin=\"base.end\" "
+                    + "dur=\"1ms\""
+                    + " attributeName=\"height\" from=\"15.5\" to=\"25.5\" fill=\"freeze\" />\n",
+            this.changeRectDimension.toSVGTagWithLoop(10));
+
+    // test for moving
+    assertEquals("<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" "
+                    + "dur=\"200.0ms\" "
+                    + "attributeName=\"x\" from=\"0.0\" to=\"102.112\" fill=\"freeze\" />\n"
+                    + "<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" dur=\"200.0ms\" "
+                    + "attributeName=\"y\" from=\"0.0\" to=\"50.5\" fill=\"freeze\" />\n"
+
+            + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
+                    + "attributeName=\"x\" from=\"102.112\" to=\"0.0\" fill=\"freeze\" />\n"
+                    + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
+                    + "attributeName=\"y\" from=\"50.5\" to=\"0.0\" fill=\"freeze\" />\n",
+            this.moveRect.toSVGTagWithLoop(10));
+    assertEquals("<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" "
+                    + "dur=\"200.0ms\" "
+                    + "attributeName=\"cx\" from=\"0.0\" to=\"102.112\" fill=\"freeze\" />\n"
+                    + "<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" dur=\"200.0ms\" "
+                    + "attributeName=\"cy\" from=\"0.0\" to=\"50.5\" fill=\"freeze\" />\n"
+
+            +"<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
+                    + "attributeName=\"cx\" from=\"102.112\" to=\"0.0\" fill=\"freeze\" />\n"
+                    + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
+                    + "attributeName=\"cy\" from=\"50.5\" to=\"0.0\" fill=\"freeze\" />\n",
+            this.moveEclipse.toSVGTagWithLoop(10));
+  }
+
 }

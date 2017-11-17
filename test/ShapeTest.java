@@ -291,4 +291,13 @@ public class ShapeTest {
             p1, Color.BLACK, 10.0, 10.0);
   }
 
+  // Test for getting the render field and setting it
+  @Test
+  public void testGetAndSetRender() {
+    assertEquals(true, this.oval1.getRender());
+    assertEquals(true, this.rect1.getRender());
+    this.oval1.setRender(false);
+    assertEquals(false, this.oval1.getRender());
+  }
+
 }

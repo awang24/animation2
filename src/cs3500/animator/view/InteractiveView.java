@@ -59,7 +59,6 @@ public class InteractiveView extends JFrame implements IView {
     this.isLoop = false;
     this.lastTime = lastTime;
 
-    //this.model = model;
     this.tempo = tempo;
     this.checkBoxList = new ArrayList<JCheckBox>();
 
