@@ -1,0 +1,28 @@
+To take care of animations:
+    enum AnimationType - to limit and know what type of animations there are
+    interface Animations - allows for user to see what it does but not how it does it. Other
+                           animation types will also be implement those methods and can easily
+                           add other animations.
+    abstract AAnimations - abstract methods that have similar code that implement Animations.
+    class ChangeColor - deals with the animation of changing color
+    class ChangeDimension - deals with the animation of changing dimensions of a shape
+    class MoveAnimation - deals with the animation of moving a shape
+
+To take care of shapes:
+    enum ShapeType - to limit and know what types of shapes there are
+    interface Shapes - allows for user to see what it does but not how it does it. Other
+                       shapes will also be implement those methods and can easily add other shapes.
+    abstract AShape - abstract methods that have similar code that implement Shapes
+    class Posn - a class for a position of a shape. Has a x and y coordinate represented
+    class Oval - a class for an oval shape
+    class RectangleShape - a class for a rectangle shape
+
+For the model:
+    interface AnimationOperations - allows for user to see what the model does. If in the future,
+                                    user needs a more complex model, the newer model can implement
+                                    these methods.
+    class SimpleAnimationModel - class for the simple animation model that allows for adding shapes
+                                 and animations
+
+class Utils: Placed static methods in Utils class that are used in many different classes
+and for tests.

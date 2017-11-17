@@ -1,0 +1,18 @@
+Shapes:
+Name: R
+Type: rectangle
+Lower-left corner: (200.0, 200.0), Width: 50.0, Height: 100.0, Color: (1.0,0.0,0.0)
+Appears at t=0.1s
+Disappears at t=10.0s
+
+Name: O
+Type: oval
+Center: (500.0, 100.0), X radius: 60.0, Y radius: 30.0, Color: (0.0,0.0,1.0)
+Appears at t=0.6s
+Disappears at t=10.0s
+
+shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=1.0s to t=5.0s
+shape O moves from (500.0, 100.0) to (500.0, 400.0) from t=2.0s to t=7.0s
+shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) from t=5.0s to t=8.0s
+shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 from t=5.1s to t=7.0s
+shape R moves from (300.0, 300.0) to (200.0, 200.0) from t=7.0s to t=10.0s
