@@ -110,7 +110,7 @@ public class VisualAnimationView extends JFrame implements IView {
 
   @Override
   public List<Shapes> getShapes() {
-    throw new UnsupportedOperationException("View does not support this method");
+    return this.shapes;
   }
 
   @Override
@@ -120,6 +120,11 @@ public class VisualAnimationView extends JFrame implements IView {
 
   @Override
   public void setIsLoop(boolean loop) {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  @Override
+  public boolean getIsLoop() {
     throw new UnsupportedOperationException("View does not support this method");
   }
 }

@@ -100,6 +100,11 @@ public class TextualView implements IView {
   }
 
   @Override
+  public boolean getIsLoop() {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  @Override
   public String getDescription() {
     //List<Shapes> shapes = model.getShapes();
     //List<Animations> animations = model.getAnimations();

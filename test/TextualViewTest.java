@@ -2,9 +2,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
 
 import cs3500.animator.model.IAnimationModel;
 import cs3500.animator.model.SimpleAnimationModel;
@@ -79,14 +83,14 @@ public class TextualViewTest {
 
   // Test for get tempo
   @Test
-  public void getTempo() {
+  public void testGetTempo() {
     assertEquals(true,
             Utils.checkDoubles(10, this.view.getTempo()));
   }
 
   // Test for getting the description
   @Test
-  public void getDescription() {
+  public void testGetDescription() {
     assertEquals("Shapes:\n"
                     + "Name: R\n"
                     + "Type: rectangle\n"
@@ -114,7 +118,7 @@ public class TextualViewTest {
 
   // Test for writing out to a file
   @Test
-  public void writeOut() {
+  public void testWriteOut() {
     this.view.writeOut("test/output.txt");
 
     BufferedReader br = null;
@@ -153,7 +157,7 @@ public class TextualViewTest {
 
   // Test for writing out an empty view
   @Test
-  public void writeOutEmptyView() {
+  public void testWriteOutEmptyView() {
     TextualView empty = new TextualView(10, new ArrayList<Shapes>(), new ArrayList<Animations>());
 
     empty.writeOut("test/mt.txt");
@@ -174,6 +178,72 @@ public class TextualViewTest {
     } catch (Exception e) {
       // do nothing
     }
+  }
+
+  // Test for making visible
+  @Test(expected = UnsupportedOperationException.class)
+  public void testMakeVisible() {
+    this.view.makeVisible();
+  }
+
+  // Test for showing error message
+  @Test(expected = UnsupportedOperationException.class)
+  public void testShowErrorMessage() {
+    this.view.showErrorMessage("error");
+  }
+
+  // Test for refresh
+  @Test(expected = UnsupportedOperationException.class)
+  public void testRefresh() {
+    this.view.refresh();
+  }
+
+  // Test for setting list of shapes
+  @Test(expected = UnsupportedOperationException.class)
+  public void testSetShapes() {
+    this.view.setShapes(new ArrayList<Shapes>());
+  }
+
+/*  // Test for setting button listener
+  @Test(expected = UnsupportedOperationException.class)
+  public void setButtonListener() {
+    this.view.setButtonListener(new ActionListener);
+  }*/
+
+  // Test for getting filename command
+  @Test(expected = UnsupportedOperationException.class)
+  public void testGetFilenameCommand() {
+    this.view.getFilenameCommand();
+  }
+
+  // Test for getting check box list
+  @Test(expected = UnsupportedOperationException.class)
+  public void testGetCheckBoxList() {
+    this.view.getCheckBoxList();
+  }
+
+  // Test for getting list of shapes
+  @Test(expected = UnsupportedOperationException.class)
+  public void testGetShapes() {
+    this.view.getShapes();
+  }
+
+  // Test for getting list of animations
+  @Test
+  public void testGetAnimations() {
+    assertEquals(this.model.getAnimations(), this.view.getAnimations());
+  }
+
+  // Test for setting the boolean is loop
+  @Test(expected = UnsupportedOperationException.class)
+  public void testSetIsLoop() {
+    this.view.setIsLoop(true);
+  }
+
+  // Test for getting the boolean is loop
+  @Test(expected = UnsupportedOperationException.class)
+  public void testGetLoop() {
+    this.view.getIsLoop();
   }
 
 

@@ -118,5 +118,12 @@ public interface IView {
    */
   void setIsLoop(boolean loop);
 
+  /**
+   * Returns the is loop boolean in the view.
+   * @return boolean for the isLoop field
+   * @throws UnsupportedOperationException if the view does not need the functionality
+   */
+  boolean getIsLoop();
+
 
 }

@@ -154,9 +154,6 @@ public class InteractiveView extends JFrame implements IView {
 
   @Override
   public String getDescription() {
-    //List<Shapes> shapes = this.getModel().getShapes();
-    //List<Animations> animations = this.getModel().getAnimations();
-    //double tempo = this.getTempo();
 
     String state = "<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
             + "xmlns=\"http://www.w3.org/2000/svg\">\n";
@@ -272,6 +269,11 @@ public class InteractiveView extends JFrame implements IView {
   @Override
   public void setIsLoop(boolean loop) {
     this.isLoop = loop;
+  }
+
+  @Override
+  public boolean getIsLoop() {
+    return this.isLoop;
   }
 
 

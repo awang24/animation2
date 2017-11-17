@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import cs3500.animator.model.IAnimationModel;
 import cs3500.animator.model.SimpleAnimationModel;
@@ -16,11 +17,15 @@ import cs3500.animator.model.shape.Oval;
 import cs3500.animator.model.shape.Posn;
 import cs3500.animator.model.shape.RectangleShape;
 import cs3500.animator.model.shape.Shapes;
-import cs3500.animator.view.SVGView;
+import cs3500.animator.view.IView;
+import cs3500.animator.view.InteractiveView;
+import cs3500.animator.view.TextualView;
+import cs3500.animator.view.VisualAnimationView;
 
 import static org.junit.Assert.assertEquals;
 
-public class SVGViewTest {
+public class InteractiveViewTest {
+
   IAnimationModel model;
   Shapes rect;
   Shapes oval;
@@ -33,7 +38,9 @@ public class SVGViewTest {
   Animations changeColorC1;
   Animations moveR2;
   Animations scaleR1;
-  SVGView view;
+  IView view;
+  List<Shapes> los;
+  List<Animations> loa;
 
   /**
    * Initializes data.
@@ -60,27 +67,25 @@ public class SVGViewTest {
     model.addAnimations(this.moveR1);
     model.addAnimations(this.moveC1);
     model.addAnimations(this.changeColorC1);
-    model.addAnimations(this.scaleR1);
     model.addAnimations(this.moveR2);
+    model.addAnimations(this.scaleR1);
 
-    view = new SVGView(10, model.getShapes(), model.getAnimations());
+    this.los = model.getShapes();
+    this.loa = model.getAnimations();
+
+    view = new InteractiveView(10, model.getShapes(), model.getAnimations(), 100);
+    //controller = new TextController(model, (TextualView) view, "output");
   }
 
-  // Test for getting the description of an empty view that has not shapes and animations
-  @Test
-  public void testGetDescriptionEmptyView() {
-    SVGView empty = new SVGView(10, new ArrayList<Shapes>(), new ArrayList<Animations>());
-
-    assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
-            + "xmlns=\"http://www.w3.org/2000/svg\">\n"
-            + "</svg>", empty.getDescription());
-  }
-
-  // Test for getting the description
+  // tes for getting the description
   @Test
   public void testGetDescription() {
-    assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
+    assertEquals("<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
+            + "<rect>\n"
+            + "<animate id=\"base\" begin=\"0;base.end\" dur=\"10000.0ms\" "
+            + "attributeName=\"visibility\" from=\"hide\" to=\"hide\"/>\n"
+            + "</rect>\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
             + "<animate attributeType=\"xml\" begin=\"1000.0ms\" dur=\"4000.0ms\" "
@@ -112,42 +117,31 @@ public class SVGViewTest {
             + "</svg>", this.view.getDescription());
   }
 
-  // Test for writing out an empty view
+  // test for making visible
   @Test
-  public void testWriteOutEmptyView() {
-    SVGView empty = new SVGView(10, new ArrayList<Shapes>(), new ArrayList<Animations>());
-
-    empty.writeOut("test/mt.svg");
-
-    BufferedReader br = null;
-    try {
-      br = new BufferedReader(new FileReader("test/mt.svg"));
-      StringBuilder sb = new StringBuilder();
-      String line = br.readLine();
-
-      while (line != null) {
-        sb.append(line);
-        sb.append("\n");
-        line = br.readLine();
-      }
-      assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
-              + "xmlns=\"http://www.w3.org/2000/svg\">\n"
-              + "</svg>\n", sb.toString());
-      br.close();
-    } catch (Exception e) {
-      // do nothing
-    }
+  public void testMakeVisible() {
+    assertEquals(false, ((VisualAnimationView) this.view).isVisible());
+    this.view.makeVisible();
+    assertEquals(true, ((VisualAnimationView) this.view).isVisible());
   }
 
 
-  // Test for writing out to a file
+  // test for setting the list of shapes
+  @Test
+  public void testSetShapes() {
+    assertEquals(this.los, this.view.getShapes());
+    this.view.setShapes(new ArrayList<Shapes>());
+    assertEquals(new ArrayList<Shapes>(), this.view.getShapes());
+  }
+
+  // test for writing out to a file
   @Test
   public void testWriteOut() {
-    this.view.writeOut("test/outSVG.svg");
+    this.view.writeOut("test/output.txt");
 
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader("test/outSVG.svg"));
+      br = new BufferedReader(new FileReader("test/output.txt"));
       StringBuilder sb = new StringBuilder();
       String line = br.readLine();
 
@@ -156,20 +150,22 @@ public class SVGViewTest {
         sb.append("\n");
         line = br.readLine();
       }
-      assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
+      assertEquals("<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
               + "xmlns=\"http://www.w3.org/2000/svg\">\n"
+              + "<rect>\n"
+              + "<animate id=\"base\" begin=\"0;base.end\" dur=\"10000.0ms\" "
+              + "attributeName=\"visibility\" from=\"hide\" to=\"hide\"/>\n"
+              + "</rect>\n"
               + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
               + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
               + "<animate attributeType=\"xml\" begin=\"1000.0ms\" dur=\"4000.0ms\" "
               + "attributeName=\"x\" from=\"200.0\" to=\"300.0\" fill=\"freeze\" />\n"
               + "<animate attributeType=\"xml\" begin=\"1000.0ms\" dur=\"4000.0ms\" "
               + "attributeName=\"y\" from=\"200.0\" to=\"300.0\" fill=\"freeze\" />\n"
-              + "<animate attributeType=\"xml\" type=\"scale\" begin=\"5100.0ms\" "
-              + "dur=\"1900.0ms\" attributeName=\"width\" from=\"50.0\" to=\"25.0\" "
-              + "fill=\"freeze\" /> \n"
-              + "<animate attributeType=\"xml\" type=\"scale\" begin=\"5100.0ms\" "
-              + "dur=\"1900.0ms\" attributeName=\"height\" from=\"100.0\" to=\"100.0\" "
-              + "fill=\"freeze\" />\n"
+              + "<animate attributeType=\"xml\" type=\"scale\" begin=\"5100.0ms\" dur=\"1900.0ms\" "
+              + "attributeName=\"width\" from=\"50.0\" to=\"25.0\" fill=\"freeze\" /> \n"
+              + "<animate attributeType=\"xml\" type=\"scale\" begin=\"5100.0ms\" dur=\"1900.0ms\" "
+              + "attributeName=\"height\" from=\"100.0\" to=\"100.0\" fill=\"freeze\" />\n"
               + "<animate attributeType=\"xml\" begin=\"7000.0ms\" dur=\"3000.0ms\" "
               + "attributeName=\"x\" from=\"300.0\" to=\"200.0\" fill=\"freeze\" />\n"
               + "<animate attributeType=\"xml\" begin=\"7000.0ms\" dur=\"3000.0ms\" "
@@ -191,7 +187,62 @@ public class SVGViewTest {
     } catch (Exception e) {
       // do nothing
     }
+  }
 
+  // Test for writing out an empty view
+  @Test
+  public void testWriteOutEmptyView() {
+    TextualView empty = new TextualView(10, new ArrayList<Shapes>(), new ArrayList<Animations>());
+
+    empty.writeOut("test/mt.txt");
+
+    BufferedReader br = null;
+    try {
+      br = new BufferedReader(new FileReader("test/mt.txt"));
+      StringBuilder sb = new StringBuilder();
+      String line = br.readLine();
+
+      while (line != null) {
+        sb.append(line);
+        sb.append("\n");
+        line = br.readLine();
+      }
+      assertEquals("", sb.toString());
+      br.close();
+    } catch (Exception e) {
+      // do nothing
+    }
+  }
+
+  // test for getting the tempo
+  @Test
+  public void testGetTempo() {
+    assertEquals(true, this.view.getTempo() == 10);
+  }
+
+  // test for getting the list of check boxes
+  @Test
+  public void testGetCheckBoxList() {
+  }
+
+  // test for getting the list of shapes
+  @Test
+  public void testGetShapes() {
+    assertEquals(this.los, this.view.getShapes());
+  }
+
+  // test for getting the list of animations
+  @Test
+  public void testGetAnimations() {
+    assertEquals(this.loa, this.view.getAnimations());
+  }
+
+  // test for setting is loop
+  @Test
+  public void testSetIsLoop() {
+    assertEquals(false, this.view.getIsLoop());
+    this.view.setIsLoop(true);
+    assertEquals(true, this.view.getIsLoop());
   }
 
 }
