@@ -3,12 +3,13 @@ package cs3500.animator.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Timer;
+
 import cs3500.animator.model.IAnimationModel;
 import cs3500.animator.model.animation.Animations;
 import cs3500.animator.model.shape.CreateShapeVisitor;
 import cs3500.animator.model.shape.Shapes;
 import cs3500.animator.view.IView;
-import cs3500.animator.view.VisualAnimationView;
 
 /**
  * Represents the controller for the visual view and implements IAnimationController and its
@@ -82,5 +83,15 @@ public class VisualController implements IAnimationController {
       }
       this.view.makeVisible();
     }
+  }
+
+  @Override
+  public Appendable getLog() {
+    throw new UnsupportedOperationException("Controller does not support this functionality");
+  }
+
+  @Override
+  public Timer getTimer() {
+    throw new UnsupportedOperationException("Controller does not support this functionality");
   }
 }

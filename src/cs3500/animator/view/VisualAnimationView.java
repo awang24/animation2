@@ -13,6 +13,7 @@ import cs3500.animator.model.animation.Animations;
 import cs3500.animator.model.shape.Shapes;
 
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -127,4 +128,5 @@ public class VisualAnimationView extends JFrame implements IView {
   public boolean getIsLoop() {
     throw new UnsupportedOperationException("View does not support this method");
   }
+
 }

@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -33,7 +34,7 @@ public class InteractiveView extends JFrame implements IView {
 
   private double tempo;
   private JButton playButton, pauseButton, restartButton, increaseSpeedButton, decreaseSpeedButton,
-          fileButton;
+          fileButton, exportButton;
   private JCheckBox loopCheckbox;
   private JPanel buttonPanel;
   private JTextField fileInput;
@@ -53,7 +54,8 @@ public class InteractiveView extends JFrame implements IView {
    * @param tempo  represents the speed at which the animation occurs
    * @param shapes list of shapes that view will use
    */
-  public InteractiveView(double tempo, List<Shapes> shapes, List<Animations> animations, int lastTime) {
+  public InteractiveView(double tempo, List<Shapes> shapes, List<Animations> animations,
+                         int lastTime) {
     super();
 
     this.isLoop = false;
@@ -79,14 +81,6 @@ public class InteractiveView extends JFrame implements IView {
     animationScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     animationScrollPane.setBounds(50, 30, 300, 500);
     animationScrollPane.setPreferredSize(new Dimension(1000, 1000));
-
-
-    // Add panel to frame
-/*    GridBagConstraints frameConstraints = new GridBagConstraints();
-    frameConstraints.gridx = 0;
-    frameConstraints.gridy = 1;
-    frameConstraints.weighty = 1;
-    this.add(scrollPane, frameConstraints);*/
 
 
     this.add(animationScrollPane);
@@ -120,6 +114,9 @@ public class InteractiveView extends JFrame implements IView {
     fileButton = new JButton("SET FILE");
     buttonPanel.add(fileButton);
 
+    exportButton = new JButton("EXPORT");
+    buttonPanel.add(exportButton);
+
     //checkbox panel
     checkboxPanel = new JPanel();
     checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
@@ -149,9 +146,7 @@ public class InteractiveView extends JFrame implements IView {
 
     this.pack();
 
-
   }
-
   @Override
   public String getDescription() {
 
@@ -199,6 +194,7 @@ public class InteractiveView extends JFrame implements IView {
     decreaseSpeedButton.addActionListener(actionEvent);
     fileButton.addActionListener(actionEvent);
     loopCheckbox.addActionListener(actionEvent);
+    exportButton.addActionListener(actionEvent);
   }
 
   @Override
@@ -240,11 +236,6 @@ public class InteractiveView extends JFrame implements IView {
       e.printStackTrace();
     }
   }
-
-/*  @Override
-  public IAnimationModel getModel() {
-    return this.model;
-  }*/
 
   @Override
   public double getTempo() {

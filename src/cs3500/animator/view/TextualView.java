@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -32,7 +33,7 @@ public class TextualView implements IView {
    * @param shapes represents the list of shapes of the model
    * @param animations represents the list of animations of the model
    */
-  public TextualView(double tempo, List<Shapes> shapes, List<Animations> animations) {//IAnimationModel model) {
+  public TextualView(double tempo, List<Shapes> shapes, List<Animations> animations) {
     this.tempo = tempo;
     this.shapes = shapes;
     this.animations = animations;
@@ -66,7 +67,7 @@ public class TextualView implements IView {
 
   @Override
   public void setShapes(List<Shapes> shapes) {
-    throw new UnsupportedOperationException("View does not support this method");
+    this.shapes = shapes;
   }
 
   @Override
@@ -86,7 +87,7 @@ public class TextualView implements IView {
 
   @Override
   public List<Shapes> getShapes() {
-    throw new UnsupportedOperationException("View does not support this method");
+    return this.shapes;
   }
 
   @Override
@@ -106,8 +107,6 @@ public class TextualView implements IView {
 
   @Override
   public String getDescription() {
-    //List<Shapes> shapes = model.getShapes();
-    //List<Animations> animations = model.getAnimations();
 
     String state = "";
 
@@ -129,6 +128,7 @@ public class TextualView implements IView {
               + newDisappearTime + "s\n";
       state += current + "\n";
     }
+
 
     for (int i = 0; i < animations.size(); i++) {
       Animations currentAnimation = animations.get(i);

@@ -2,13 +2,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.*;
 
 import cs3500.animator.model.IAnimationModel;
 import cs3500.animator.model.SimpleAnimationModel;
@@ -41,7 +38,7 @@ public class TextualViewTest {
   Animations moveR2;
   Animations scaleR1;
   IView view;
-  //IAnimationController controller;
+  List<Shapes> los;
 
   /**
    * Initializes data.
@@ -72,14 +69,8 @@ public class TextualViewTest {
     model.addAnimations(this.scaleR1);
 
     view = new TextualView(10, model.getShapes(), model.getAnimations());
-    //controller = new TextController(model, (TextualView) view, "output");
+    los = view.getShapes();
   }
-
-/*  // Test for getting the model
-  @Test
-  public void getModel() {
-    assertEquals(this.model, this.view.getModel());
-  }*/
 
   // Test for get tempo
   @Test
@@ -111,7 +102,8 @@ public class TextualViewTest {
                     + "from t=7.0s to t=10.0s\n",
             this.view.getDescription());
 
-    TextualView empty = new TextualView(10, new ArrayList<Shapes>(), new ArrayList<Animations>());
+    TextualView empty = new TextualView(10, new ArrayList<Shapes>(),
+            new ArrayList<Animations>());
 
     assertEquals("", empty.getDescription());
   }
@@ -158,7 +150,8 @@ public class TextualViewTest {
   // Test for writing out an empty view
   @Test
   public void testWriteOutEmptyView() {
-    TextualView empty = new TextualView(10, new ArrayList<Shapes>(), new ArrayList<Animations>());
+    TextualView empty = new TextualView(10, new ArrayList<Shapes>(),
+            new ArrayList<Animations>());
 
     empty.writeOut("test/mt.txt");
 
@@ -199,16 +192,11 @@ public class TextualViewTest {
   }
 
   // Test for setting list of shapes
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testSetShapes() {
     this.view.setShapes(new ArrayList<Shapes>());
+    assertEquals(new ArrayList<Shapes>(), this.view.getShapes());
   }
-
-/*  // Test for setting button listener
-  @Test(expected = UnsupportedOperationException.class)
-  public void setButtonListener() {
-    this.view.setButtonListener(new ActionListener);
-  }*/
 
   // Test for getting filename command
   @Test(expected = UnsupportedOperationException.class)
@@ -223,9 +211,9 @@ public class TextualViewTest {
   }
 
   // Test for getting list of shapes
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testGetShapes() {
-    this.view.getShapes();
+    assertEquals(los, this.view.getShapes());
   }
 
   // Test for getting list of animations

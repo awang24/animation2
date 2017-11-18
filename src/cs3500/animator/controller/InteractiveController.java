@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class InteractiveController implements IAnimationController, ActionListen
   private List<Shapes> newListShapes;
   private int lastTime;
   private double unitsElapsed;
+  private Appendable log;
 
   /**
    * Create an instance of an InteractiveController.
@@ -49,6 +51,7 @@ public class InteractiveController implements IAnimationController, ActionListen
     this.filename = filename;
     this.unitsElapsed = 0;
     this.lastTime = model.getLastTime();
+    this.log = new StringBuffer();
   }
 
   @Override
@@ -68,6 +71,23 @@ public class InteractiveController implements IAnimationController, ActionListen
     this.createNewListOfShapes();
 
     this.timer = new Timer(0, timerListener);
+
+
+    List<Animations> animations = model.getAnimations();
+
+    for (int i = 0; i < animations.size(); i++) {
+      Animations currentAnimation = animations.get(i);
+      Shapes animationShape = currentAnimation.getShape();
+      for (int j = 0; j < newListShapes.size(); j++) {
+        Shapes currentShape = newListShapes.get(j);
+        if (currentShape.getName().equals(animationShape.getName())) {
+          currentAnimation.setShape(currentShape);
+        }
+      }
+    }
+
+    this.view.writeOut(filename);
+
   }
 
   /**
@@ -90,7 +110,6 @@ public class InteractiveController implements IAnimationController, ActionListen
 
       unitsElapsed += tempo / 1000;
 
-
       if (isLoop && (lastTime - unitsElapsed < 0.000001)) {
         unitsElapsed = 0;
 
@@ -112,17 +131,6 @@ public class InteractiveController implements IAnimationController, ActionListen
       List<Animations> animations = model.getAnimations();
 
       for (int i = 0; i < animations.size(); i++) {
-        Animations currentAnimation = animations.get(i);
-        Shapes animationShape = currentAnimation.getShape();
-        for (int j = 0; j < newListShapes.size(); j++) {
-          Shapes currentShape = newListShapes.get(j);
-          if (currentShape.getName().equals(animationShape.getName())) {
-            currentAnimation.setShape(currentShape);
-          }
-        }
-      }
-
-      for (int i = 0; i < animations.size(); i++) {
         Animations current = animations.get(i);
         int start = current.getStart();
         int end = current.getEnd();
@@ -139,36 +147,40 @@ public class InteractiveController implements IAnimationController, ActionListen
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    System.out.println(e.getActionCommand());
     switch (e.getActionCommand()) {
       case "PLAY":
+        this.appendLog("Play Button hit. \n");
         this.timer.start();
         this.enableBoxes(false);
-
         //Offer SVG functionality
-        this.view.writeOut(filename);
+        System.out.println(log.toString());
         break;
       case "PAUSE":
+        this.appendLog("Pause Button hit. \n");
         this.timer.stop();
         this.enableBoxes(true);
         break;
       case "RESTART":
+        this.appendLog("Restart Button hit. \n");
         this.timer.restart();
         this.enableBoxes(false);
         this.createNewListOfShapes();
         unitsElapsed = 0;
         break;
       case "LOOP":
+        this.appendLog("Loop Button hit. \n");
         isLoop = !isLoop;
         view.setIsLoop(isLoop);
         this.enableBoxes(true);
         break;
       case "INCREASE SPEED":
+        this.appendLog("Increase Speed Button hit. \n");
         this.enableBoxes(false);
         tempo += 5;
         unitsElapsed -= (tempo) / 1000;
         break;
       case "DECREASE SPEED":
+        this.appendLog("Decrease Speed Button hit. \n");
         this.enableBoxes(false);
         if (tempo <= 0) {
           tempo = 0;
@@ -178,9 +190,13 @@ public class InteractiveController implements IAnimationController, ActionListen
         unitsElapsed += (tempo) / 1000;
         break;
       case "SET FILE":
+        this.appendLog("Set File Button hit. \n");
         this.enableBoxes(true);
-        processFilenameCommand(view.getFilenameCommand());
+        filename = view.getFilenameCommand();
         break;
+      case "EXPORT":
+        this.appendLog("Export Button hit. \n");
+        processFilenameCommand(filename);
       default:
         // do nothing
     }
@@ -198,15 +214,20 @@ public class InteractiveController implements IAnimationController, ActionListen
     }
   }
 
+  /**
+   * A class to handle operations specific to a checkbox's item listener.
+   */
   private class HandlerClass implements ItemListener {
 
     @Override
     public void itemStateChanged(ItemEvent e) {
       for (int i = 0; i < view.getCheckBoxList().size(); i++) {
         if (!view.getCheckBoxList().get(i).isSelected()) {
-          changeShapeRender(view.getCheckBoxList().get(i).getAccessibleContext().getAccessibleName(), false);
+          changeShapeRender(view.getCheckBoxList().get(i).getAccessibleContext().getAccessibleName()
+                  , false);
         } else {
-          changeShapeRender(view.getCheckBoxList().get(i).getAccessibleContext().getAccessibleName(), true);
+          changeShapeRender(view.getCheckBoxList().get(i).getAccessibleContext().getAccessibleName()
+                  , true);
         }
       }
     }
@@ -241,27 +262,28 @@ public class InteractiveController implements IAnimationController, ActionListen
     }
   }
 
-
   /**
-   * Set the tempo equal to the speed as determined by the user in the speed input textbox.
+   * Put an entry into the log.
    *
-   * @param command The new speed that the user determines for the animation
+   * @param entry The string that is being written to the log
    */
-/*  private void processSpeedCommand(String command) {
-    int newTempo = -1;
-
+  private void appendLog(String entry) {
     try {
-      newTempo = Integer.parseInt(command);
-      if (newTempo >= 0) {
-        timeElapsed = (int) (timeElapsed/tempo);
-        timeElapsed = timeElapsed / 1000;
-        tempo = newTempo;
-      } else {
-        view.showErrorMessage("Speed must be positive");
-      }
-    } catch (Exception e) {
-      view.showErrorMessage("Invalid speed.");
+      this.log.append(entry);
+    } catch (IOException e) {
+      //do nothing
     }
-  }*/
+  }
+
+  @Override
+  public Appendable getLog() {
+    return this.log;
+  }
+
+  @Override
+  public Timer getTimer() {
+    return this.timer;
+  }
+
 
 }

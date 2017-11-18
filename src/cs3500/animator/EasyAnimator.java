@@ -17,10 +17,6 @@ import cs3500.animator.model.Utils;
 import cs3500.animator.starter.AnimationFileReader;
 import cs3500.animator.starter.TweenModelBuilder;
 import cs3500.animator.view.IView;
-import cs3500.animator.view.InteractiveView;
-import cs3500.animator.view.SVGView;
-import cs3500.animator.view.TextualView;
-import cs3500.animator.view.VisualAnimationView;
 
 /**
  * Represents an animation runner. Compiles the MVC to represent an animation.

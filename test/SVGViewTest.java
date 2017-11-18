@@ -71,7 +71,7 @@ public class SVGViewTest {
   public void testGetDescriptionEmptyView() {
     SVGView empty = new SVGView(10, new ArrayList<Shapes>(), new ArrayList<Animations>());
 
-    assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
+    assertEquals("<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "</svg>", empty.getDescription());
   }
@@ -79,7 +79,7 @@ public class SVGViewTest {
   // Test for getting the description
   @Test
   public void testGetDescription() {
-    assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
+    assertEquals("<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -130,7 +130,7 @@ public class SVGViewTest {
         sb.append("\n");
         line = br.readLine();
       }
-      assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
+      assertEquals("<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
               + "xmlns=\"http://www.w3.org/2000/svg\">\n"
               + "</svg>\n", sb.toString());
       br.close();
@@ -156,7 +156,7 @@ public class SVGViewTest {
         sb.append("\n");
         line = br.readLine();
       }
-      assertEquals("<svg width=\"700\" height=\"500\" version=\"1.1\"\n"
+      assertEquals("<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
               + "xmlns=\"http://www.w3.org/2000/svg\">\n"
               + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
               + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"

@@ -46,5 +46,4 @@ public class SVGView extends TextualView {
 
     return state;
   }
-
 }

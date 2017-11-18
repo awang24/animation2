@@ -20,7 +20,6 @@ import cs3500.animator.model.shape.Shapes;
 import cs3500.animator.view.IView;
 import cs3500.animator.view.InteractiveView;
 import cs3500.animator.view.TextualView;
-import cs3500.animator.view.VisualAnimationView;
 
 import static org.junit.Assert.assertEquals;
 
@@ -120,9 +119,9 @@ public class InteractiveViewTest {
   // test for making visible
   @Test
   public void testMakeVisible() {
-    assertEquals(false, ((VisualAnimationView) this.view).isVisible());
+    assertEquals(false, ((InteractiveView) this.view).isVisible());
     this.view.makeVisible();
-    assertEquals(true, ((VisualAnimationView) this.view).isVisible());
+    assertEquals(true, ((InteractiveView) this.view).isVisible());
   }
 
 
@@ -223,6 +222,7 @@ public class InteractiveViewTest {
   // test for getting the list of check boxes
   @Test
   public void testGetCheckBoxList() {
+    assertEquals(2, this.view.getCheckBoxList().size());
   }
 
   // test for getting the list of shapes

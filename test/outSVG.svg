@@ -1,4 +1,4 @@
-<svg width="700" height="500" version="1.1"
+<svg width="1000" height="1000" version="1.1"
 xmlns="http://www.w3.org/2000/svg">
 <rect id="R" x="200.0" y="200.0" width="50.0" height="100.0" fill="rgb(255,0,0)" visibility="visible">
 <animate attributeType="xml" begin="1000.0ms" dur="4000.0ms" attributeName="x" from="200.0" to="300.0" fill="freeze" />

@@ -48,8 +48,10 @@ public class AnimationsTest {
     changeEclipseColor = new ChangeColor(this.oval1, 5, 10, Color.BLACK, Color.RED);
     changeRectColor = new ChangeColor(this.rect1, 5, 10, Color.BLACK, Color.PINK);
     changeEclipseDimension =
-            new ChangeDimension(this.oval2, 11, 12, 20.0, 25.5, 15.5, 15.5);
-    changeRectDimension = new ChangeDimension(this.rect2, 11, 12, 20.0, 25.5, 15.5, 15.5);
+            new ChangeDimension(this.oval2, 11, 12, 20.0, 25.5,
+                    15.5, 15.5);
+    changeRectDimension = new ChangeDimension(this.rect2, 11, 12, 20.0,
+            25.5, 15.5, 15.5);
     moveEclipse = new MoveAnimation(this.oval1, 8, 10, this.p1, this.p2);
     moveRect = new MoveAnimation(this.rect1, 8, 10, this.p1, this.p2);
 

@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.*;
@@ -124,6 +125,7 @@ public interface IView {
    * @throws UnsupportedOperationException if the view does not need the functionality
    */
   boolean getIsLoop();
+
 
 
 }

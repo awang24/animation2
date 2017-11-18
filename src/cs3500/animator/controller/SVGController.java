@@ -1,7 +1,8 @@
 package cs3500.animator.controller;
 
+import javax.swing.Timer;
+
 import cs3500.animator.view.IView;
-import cs3500.animator.view.SVGView;
 
 /**
  * Represents the controller for the textual view and implements IAnimationController and its
@@ -26,5 +27,15 @@ public class SVGController implements IAnimationController {
   @Override
   public void start() {
     this.view.writeOut(filename);
+  }
+
+  @Override
+  public Appendable getLog() {
+    throw new UnsupportedOperationException("Controller does not support this functionality");
+  }
+
+  @Override
+  public Timer getTimer() {
+    throw new UnsupportedOperationException("Controller does not support this functionality");
   }
 }
